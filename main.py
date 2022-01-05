@@ -23,25 +23,7 @@ def get_video_paths():
     return videos
 
 
-# def removeDuplicateFrames(video):
-#     print('Removing duplicate frames')
-#     frame_count = video.get(cv2.CAP_PROP_FRAME_COUNT)
-    
-#     for i in tqdm(range(int(frame_count))):
-#         video.set(cv2.CAP_PROP_POS_FRAMES, i)
-#         _, frame = video.read()
-#         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#         if i == 0:
-#             prev_frame = frame
-#             continue
-#         if np.array_equal(frame, prev_frame):
-#             video.set(cv2.CAP_PROP_POS_FRAMES, i - 1)
-#             return video
-#         prev_frame = frame
-#     return video
-
-
-def label_videos(videos, show_video=False, scale=1, remove_same_frames=False):
+def label_videos(videos, show_video=False, scale=1):
     """
     Labels the videos in the directory
     """
@@ -60,29 +42,12 @@ def label_videos(videos, show_video=False, scale=1, remove_same_frames=False):
         print('Labelling video: {}'.format(video_name))
         
         labelled_frames = []
-        prev_frame = None
-        difference = np.inf
-
         while True:
             _, frame = video.read()
             if frame is None:
                 break
 
             print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
-
-            if remove_same_frames:
-                if prev_frame is not None:
-                    difference = (frame-prev_frame).sum()
-
-                if difference < 100:
-                    labelled_frames.append(labelled_frames[-1])
-                    print('Frame is similar frame')
-                    
-                else:
-                    labelled_frames.append(image_detect_loaded(frame))
-                    print('Frame is not similar frame', difference)
-            else:
-                labelled_frames.append(image_detect_loaded(frame))
                 
 
             if show_video:
