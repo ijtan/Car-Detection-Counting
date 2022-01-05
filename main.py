@@ -28,27 +28,22 @@ def label_videos(videos, show_video=False):
     for video_path in videos:
         video = cv2.VideoCapture(video_path)
         video_name = video_path.split('/')[-1]
-        print('Framing video: {}'.format(video_name))
+        print('Labelling video: {}'.format(video_name))
         
-        frames = []
+        labelled_frames = []
+
         while True:
             _, frame = video.read()
             if frame is None:
                 break
-            frames.append(frame)
-        video.release()
 
-        labelled_frames = []
-
-        print('Labelling video: {}'.format(video_name))
-
-        for frame in frames:
-            # save frame
             labelled_frames.append(image_detect_loaded(frame))
             if show_video:
                 cv2.imshow('Video', frame)
-                cv2.waitKey(1)
-        print('Saving video: {}'.format(video_name))
+                cv2.waitKey(0)
+
+        video.release()
+        cv2.destroyAllWindows()
         cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'mp4v'), 30, (1280, 720))
         
 
