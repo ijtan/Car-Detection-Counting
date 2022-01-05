@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from object_detection import *
+from tqdm import tqdm
 
 video_path='videos'
 
@@ -21,12 +22,40 @@ def get_video_paths():
                 videos.append(file)
     return videos
 
-def label_videos(videos, show_video=False):
+
+# def removeDuplicateFrames(video):
+#     print('Removing duplicate frames')
+#     frame_count = video.get(cv2.CAP_PROP_FRAME_COUNT)
+    
+#     for i in tqdm(range(int(frame_count))):
+#         video.set(cv2.CAP_PROP_POS_FRAMES, i)
+#         _, frame = video.read()
+#         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#         if i == 0:
+#             prev_frame = frame
+#             continue
+#         if np.array_equal(frame, prev_frame):
+#             video.set(cv2.CAP_PROP_POS_FRAMES, i - 1)
+#             return video
+#         prev_frame = frame
+#     return video
+
+
+def label_videos(videos, show_video=False, scale=1, remove_same_frames=False):
     """
     Labels the videos in the directory
     """
     for video_path in videos:
         video = cv2.VideoCapture(video_path)
+        
+        # downsize video to scale
+        if scale != 1:
+            video.set(cv2.CAP_PROP_FRAME_WIDTH, int(video.get(cv2.CAP_PROP_FRAME_WIDTH) / scale))
+            video.set(cv2.CAP_PROP_FRAME_HEIGHT, int(video.get(cv2.CAP_PROP_FRAME_HEIGHT) / scale))
+
+        # if remove_same_frames:
+        #     video = removeDuplicateFrames(video)
+
         video_name = video_path.split('/')[-1]
         print('Labelling video: {}'.format(video_name))
         
@@ -36,7 +65,8 @@ def label_videos(videos, show_video=False):
             _, frame = video.read()
             if frame is None:
                 break
-
+            
+            print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
             labelled_frames.append(image_detect_loaded(frame))
             if show_video:
                 cv2.imshow('Video', frame)
@@ -54,7 +84,6 @@ if __name__ == '__main__':
     
     print('Found {} videos'.format(len(videos)))
 
-    example_path = videos[-3]
-    label_videos([example_path], True)
-    # labels = get_video_labels(videos)
-    # print(labels)
+    # example_path = videos[-3]
+    # label_videos([example_path], True)
+    label_videos(videos, True,.5,True)
