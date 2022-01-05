@@ -60,17 +60,35 @@ def label_videos(videos, show_video=False, scale=1, remove_same_frames=False):
         print('Labelling video: {}'.format(video_name))
         
         labelled_frames = []
+        prev_frame = None
+        difference = np.inf
 
         while True:
             _, frame = video.read()
             if frame is None:
                 break
-            
+
             print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
-            labelled_frames.append(image_detect_loaded(frame))
+
+            if remove_same_frames:
+                if prev_frame is not None:
+                    difference = (frame-prev_frame).sum()
+
+                if difference < 100:
+                    labelled_frames.append(labelled_frames[-1])
+                    print('Frame is similar frame')
+                    
+                else:
+                    labelled_frames.append(image_detect_loaded(frame))
+                    print('Frame is not similar frame', difference)
+            else:
+                labelled_frames.append(image_detect_loaded(frame))
+                
+
             if show_video:
-                cv2.imshow('Video', frame)
+                cv2.imshow('Video', labelled_frames[-1])
                 cv2.waitKey(0)
+            prev_frame = frame
 
         video.release()
         cv2.destroyAllWindows()
