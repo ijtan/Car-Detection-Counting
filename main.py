@@ -48,11 +48,13 @@ def label_videos(videos, show_video=False, scale=1):
                 break
 
             print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
-                
+            labelled_frames.append(image_detect_loaded(frame))
 
             if show_video:
                 cv2.imshow('Video', labelled_frames[-1])
-                cv2.waitKey(0)
+                # cv2.waitKey(0)
+                # wait for a few ms
+                cv2.waitKey(1)
             prev_frame = frame
 
         video.release()
@@ -67,6 +69,7 @@ if __name__ == '__main__':
     
     print('Found {} videos'.format(len(videos)))
 
-    # example_path = videos[-3]
-    # label_videos([example_path], True)
-    label_videos(videos, True,.5,True)
+    example_path = videos[-7]
+    label_videos([example_path], True, 10)
+
+    # label_videos(videos, True,.5)
