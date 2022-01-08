@@ -48,6 +48,6 @@ if __name__ == '__main__':
     # rain_1_boxes = 'rain_1_yolo/'
 
     msida_vid = vid_path + msida
-    msida_boxes = 'output_ccords/'
+    msida_boxes = "output_coords/videos/Msida/20200323_155250.mp4/"
 
     show_video_labels(msida_vid, msida_boxes)
