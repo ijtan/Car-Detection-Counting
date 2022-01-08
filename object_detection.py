@@ -69,6 +69,21 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img):
 	return img
 
 
+def draw_txt_labels(boxes, colors, img): 
+	# set all confs as 100
+	confs = [100]*len(boxes)
+	indexes = cv2.dnn.NMSBoxes(boxes, confs, 0.5, 0.4)
+	font = cv2.FONT_HERSHEY_PLAIN
+	for i in range(len(boxes)):
+		if i in indexes:
+			x, y, w, h = boxes[i]
+			label = str('car')
+			color = colors[i]
+			cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
+			cv2.putText(img, label, (x, y - 5), font, 1, color, 1)
+	# cv2.imshow("Image", img)
+	return img
+
 
 # def image_detect(img_path): 
 # 	model, classes, colors, output_layers = load_yolo()
@@ -130,7 +145,7 @@ def label_image(image, boxes):
 	outputs = boxes
 
 	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
-	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
+	labelled = draw_txt_labels(boxes,colors, image)
 	return labelled
 
 
