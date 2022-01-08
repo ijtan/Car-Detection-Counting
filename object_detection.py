@@ -76,22 +76,14 @@ def draw_txt_labels(boxes, colors, img):
 	font = cv2.FONT_HERSHEY_PLAIN
 	for i in range(len(boxes)):
 		if i in indexes:
-			box = boxes[i]
-			size = img.shape
+			x, y, w, h = boxes[i]
+			image_x_res = img.shape[1]
+			image_y_res = img.shape[0]
 
-			dw = size[0]
-			dh = size[1]
-
-			x = (box[0] + box[1])/2.0
-			y = (box[2] + box[3])/2.0
-			w = box[1] - box[0]
-			h = box[3] - box[2]
-
-			x = round(x*dw)
-			w = round(w*dw)
-			y = round(y*dh)
-			h = round(h*dh)
-
+			x = round(x*image_x_res)
+			y = round(y*image_y_res)
+			w = round(w*image_x_res)
+			h = round(h*image_y_res)
 			
 			label = str('car')
 			print(label, x, y, w, h)
@@ -150,6 +142,7 @@ def image_detect_loaded(image, frame_no, path):
 	blob, outputs = detect_objects(image, model, output_layers)
 	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
 
+	normalized_boxes = [box / [width, height] for box in boxes]
 	append_box_to_file(path, frame_no, boxes)
 
 	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
