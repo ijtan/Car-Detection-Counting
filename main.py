@@ -75,7 +75,7 @@ if __name__ == '__main__':
     
     print('Found {} videos'.format(len(videos)))
 
-    example_path = videos[-7]
-    label_videos([example_path], True)
+    # # example_path = videos[-7]
+    # label_videos([example_path], True)
 
-    # label_videos(videos, True,.5)
+    label_videos(videos, True)
