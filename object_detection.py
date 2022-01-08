@@ -78,6 +78,7 @@ def draw_txt_labels(boxes, colors, img):
 		if i in indexes:
 			x, y, w, h = boxes[i]
 			label = str('car')
+			print(label, x, y, w, h)
 			color = colors[i]
 			cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
 			cv2.putText(img, label, (x, y - 5), font, 1, color, 1)
@@ -140,11 +141,6 @@ def image_detect_loaded(image, frame_no, path):
 
 def label_image(image, boxes):
 	
-	height, width, channels = image.shape
-	
-	outputs = boxes
-
-	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
 	labelled = draw_txt_labels(boxes,colors, image)
 	return labelled
 
