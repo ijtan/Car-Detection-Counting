@@ -14,9 +14,9 @@ from time import sleep
 
 
 
-def show_video_labels(vid_path, box_dir):
+def show_video_labels(vid_path, box_dir,start_from_centre=True):
     box_files = glob.glob(box_dir + '*.txt')
-    box_files = sorted(box_files, key=lambda x: int(x.split('/')[-1].split('.')[0]))
+    box_files = sorted(box_files, key=lambda x: int(x.rsplit('\\')[-1].rsplit('.')[0]))
     video = cv2.VideoCapture(vid_path)
     
     while True:
@@ -31,8 +31,12 @@ def show_video_labels(vid_path, box_dir):
         with open(box_file, 'r') as f:
             for line in f:
                 coords = line.split(' ')
-                index = coords[0]
+                classification_class_index = coords[0]
                 coords = [float(x) for x in coords[1:]]
+
+                if start_from_centre:
+                    coords[0] -= coords[2] / 2
+                    coords[1] -= coords[3] / 2
 
                 boxes.append(coords)
 
@@ -48,16 +52,16 @@ def show_video_labels(vid_path, box_dir):
         
 if __name__ == '__main__':
     vid_path = 'videos/'
-    # rain_1_path = vid_path + Rain_1 + '.mp4'
-    # rain_1_boxes = 'rain_1_yolo/'
+    rain_1_path = vid_path + Rain_1 + '.mp4'
+    rain_1_boxes = 'rain_1_yolo/'
 
-    # show_video_labels(rain_1_path, rain_1_boxes)
+    show_video_labels(rain_1_path, rain_1_boxes)
 
     # sleep(5)
     msida_vid = vid_path + msida
     msida_boxes = "output_coords/videos/Msida/20200323_155250.mp4/"
 
-    show_video_labels(msida_vid, msida_boxes)
+    show_video_labels(msida_vid, msida_boxes,start_from_centre=True)
 
 
 
