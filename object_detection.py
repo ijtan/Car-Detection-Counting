@@ -80,10 +80,15 @@ def draw_txt_labels(boxes, colors, img):
 			image_x_res = img.shape[1]
 			image_y_res = img.shape[0]
 
-			x = int(x*image_x_res)
-			y = int(y*image_y_res)
-			w = int(w*image_x_res)
-			h = int(h*image_y_res)
+			x = round(x*image_x_res)
+			y = round(y*image_y_res)
+			w = round(w*image_x_res)
+			h = round(h*image_y_res)
+
+			# x_start = round(x - (w/2))
+			# y_start = round(y - (h/2))
+			# x_end = round(x_start + w)
+			# y_end = round(y_start + h)
 			
 			label = str('car')
 			print(label, x, y, w, h)
