@@ -55,7 +55,7 @@ if __name__ == '__main__':
     rain_1_path = vid_path + Rain_1 + '.mp4'
     rain_1_boxes = 'rain_1_yolo/'
 
-    show_video_labels(rain_1_path, rain_1_boxes)
+    # show_video_labels(rain_1_path, rain_1_boxes)
 
     # sleep(5)
     msida_vid = vid_path + msida
