@@ -145,7 +145,7 @@ def image_detect_loaded(image, frame_no, path):
 	normalized_boxes = []
 	for box in boxes:
 		normalized_boxes.append([box[0]/width, box[1]/height, box[2]/width, box[3]/height])
-	append_box_to_file(path, frame_no, boxes)
+	append_box_to_file(path, frame_no, normalized_boxes)
 
 	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
 	return labelled
