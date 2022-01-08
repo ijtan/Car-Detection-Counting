@@ -120,6 +120,7 @@ def append_box_to_file(path, frame_no, boxes):
         str_to_append += str(0)+' '+str(coords[0])+' '+str(
             coords[1])+' '+str(coords[2])+' '+str(coords[3])+'\n'
 
+    print('Saving Frame: ', frame_no)
     new_path = os.path.join(path, str(frame_no)+'.txt')
 
     # create if not exists
@@ -128,11 +129,8 @@ def append_box_to_file(path, frame_no, boxes):
         if not os.path.exists(os.path.dirname(new_path)):
             os.makedirs(os.path.dirname(new_path))
 
-        with open(new_path, 'w') as f:
-            f.write(str_to_append)
-    else:
-        with open(new_path, 'a') as f:
-            f.write(str_to_append)
+    with open(new_path, 'w') as f:
+        f.write(str_to_append)
 
 
 model, classes, colors, output_layers = load_yolo()

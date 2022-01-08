@@ -16,6 +16,7 @@ from time import sleep
 
 def show_video_labels(vid_path, box_dir):
     box_files = glob.glob(box_dir + '*.txt')
+    box_files = sorted(box_files, key=lambda x: int(x.split('/')[-1].split('.')[0]))
     video = cv2.VideoCapture(vid_path)
     
     while True:
@@ -35,6 +36,8 @@ def show_video_labels(vid_path, box_dir):
 
                 boxes.append(coords)
 
+        print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
+        print('Box file: {}'.format(box_file))
         label_image(frame, boxes)
         cv2.imshow('video', frame)
         key = cv2.waitKey(1)
@@ -45,12 +48,12 @@ def show_video_labels(vid_path, box_dir):
         
 if __name__ == '__main__':
     vid_path = 'videos/'
-    rain_1_path = vid_path + Rain_1 + '.mp4'
-    rain_1_boxes = 'rain_1_yolo/'
+    # rain_1_path = vid_path + Rain_1 + '.mp4'
+    # rain_1_boxes = 'rain_1_yolo/'
 
-    show_video_labels(rain_1_path, rain_1_boxes)
+    # show_video_labels(rain_1_path, rain_1_boxes)
 
-    sleep(5)
+    # sleep(5)
     msida_vid = vid_path + msida
     msida_boxes = "output_coords/videos/Msida/20200323_155250.mp4/"
 
