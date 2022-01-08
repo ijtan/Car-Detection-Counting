@@ -4,6 +4,8 @@ Rain_1 = "Gozo Ferry/rainTest"
 Day_2 = "Gozo Ferry/footage3"
 Night_2 = "Gozo Ferry/20190127_200452"
 
+msida = "Msida/20200323_155250.mp4"
+
 from main import *
 from object_detection import *
 import os
@@ -42,7 +44,10 @@ def show_video_labels(vid_path, box_dir):
         
 if __name__ == '__main__':
     vid_path = 'videos/'
-    rain_1_path = vid_path + Rain_1 + '.mp4'
-    rain_1_boxes = 'rain_1_yolo/'
-    show_video_labels(rain_1_path, rain_1_boxes)
- 
+    # rain_1_path = vid_path + Rain_1 + '.mp4'
+    # rain_1_boxes = 'rain_1_yolo/'
+
+    msida_vid = vid_path + msida
+    msida_boxes = 'output_ccords/'
+
+    show_video_labels(msida_vid, msida_boxes)
