@@ -10,6 +10,7 @@ from main import *
 from object_detection import *
 import os
 import glob
+from time import sleep
 
 
 
