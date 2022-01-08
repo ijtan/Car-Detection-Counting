@@ -44,10 +44,16 @@ def show_video_labels(vid_path, box_dir):
         
 if __name__ == '__main__':
     vid_path = 'videos/'
-    # rain_1_path = vid_path + Rain_1 + '.mp4'
-    # rain_1_boxes = 'rain_1_yolo/'
+    rain_1_path = vid_path + Rain_1 + '.mp4'
+    rain_1_boxes = 'rain_1_yolo/'
 
+    show_video_labels(rain_1_path, rain_1_boxes)
+
+    sleep(5)
     msida_vid = vid_path + msida
     msida_boxes = "output_coords/videos/Msida/20200323_155250.mp4/"
 
     show_video_labels(msida_vid, msida_boxes)
+
+
+
