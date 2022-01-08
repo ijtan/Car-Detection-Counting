@@ -123,6 +123,16 @@ def image_detect_loaded(image, frame_no, path):
 	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
 	return labelled
 
+def label_image(image, boxes):
+	
+	height, width, channels = image.shape
+	
+	outputs = boxes
+
+	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
+	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
+	return labelled
+
 
 
 
