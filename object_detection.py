@@ -76,19 +76,21 @@ def draw_txt_labels(boxes, colors, img):
 	font = cv2.FONT_HERSHEY_PLAIN
 	for i in range(len(boxes)):
 		if i in indexes:
-			x, y, w, h = boxes[i]
-			image_x_res = img.shape[1]
-			image_y_res = img.shape[0]
+			box = boxes[i]
+			size = img.shape
 
-			x = round(x*image_x_res)
-			y = round(y*image_y_res)
-			w = round(w*image_x_res)
-			h = round(h*image_y_res)
+			dw = 1./size[0]
+			dh = 1./size[1]
+			x = (box[0] + box[1])/2.0
+			y = (box[2] + box[3])/2.0
+			w = box[1] - box[0]
+			h = box[3] - box[2]
 
-			# x_start = round(x - (w/2))
-			# y_start = round(y - (h/2))
-			# x_end = round(x_start + w)
-			# y_end = round(y_start + h)
+			x = round(x*dw)
+			w = round(w*dw)
+			y = round(y*dh)
+			h = round(h*dh)
+
 			
 			label = str('car')
 			print(label, x, y, w, h)
