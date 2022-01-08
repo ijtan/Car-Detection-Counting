@@ -110,7 +110,7 @@ def append_box_to_file(path,frame_no, boxes):
 	# box_ax_csv = [box[0], box[1], box[2], box[3]]
 	str_to_append = ""
 	for ix, coords in enumerate(boxes):
-		str_to_append += str(ix)+' '+str(coords[0])+' '+str(coords[1])+' '+str(coords[2])+' '+str(coords[3])+'\n'
+		str_to_append += str(0)+' '+str(coords[0])+' '+str(coords[1])+' '+str(coords[2])+' '+str(coords[3])+'\n'
 
 	new_path = os.path.join(path, str(frame_no)+'.txt')
 
@@ -142,7 +142,9 @@ def image_detect_loaded(image, frame_no, path):
 	blob, outputs = detect_objects(image, model, output_layers)
 	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
 
-	normalized_boxes = [box / [width, height] for box in boxes]
+	normalized_boxes = []
+	for box in boxes:
+		normalized_boxes.append([box[0]/width, box[1]/height, box[2]/width, box[3]/height])
 	append_box_to_file(path, frame_no, boxes)
 
 	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
