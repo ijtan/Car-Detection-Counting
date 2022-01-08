@@ -77,6 +77,14 @@ def draw_txt_labels(boxes, colors, img):
 	for i in range(len(boxes)):
 		if i in indexes:
 			x, y, w, h = boxes[i]
+			image_x_res = img.shape[1]
+			image_y_res = img.shape[0]
+
+			x = int(x*image_x_res)
+			y = int(y*image_y_res)
+			w = int(w*image_x_res)
+			h = int(h*image_y_res)
+			
 			label = str('car')
 			print(label, x, y, w, h)
 			color = colors[i]
