@@ -8,6 +8,7 @@ from object_detection import *
 from tqdm import tqdm
 
 video_path='videos'
+output_txt_path = 'output_coords'
 
 
 def get_video_paths():
@@ -39,6 +40,8 @@ def label_videos(videos, show_video=False, scale=1):
         #     video = removeDuplicateFrames(video)
 
         video_name = video_path.split('/')[-1]
+        coord_path  = os.path.join(output_txt_path, video_name)
+
         print('Labelling video: {}'.format(video_name))
         
         labelled_frames = []
@@ -48,7 +51,9 @@ def label_videos(videos, show_video=False, scale=1):
                 break
 
             print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
-            labelled_frames.append(image_detect_loaded(frame))
+            
+
+            labelled_frames.append(image_detect_loaded(frame, video.get(cv2.CAP_PROP_POS_FRAMES), coord_path))
 
             if show_video:
                 cv2.imshow('Video', labelled_frames[-1])
@@ -60,6 +65,7 @@ def label_videos(videos, show_video=False, scale=1):
         video.release()
         cv2.destroyAllWindows()
         cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'mp4v'), 30, (1280, 720))
+        
         
 
 

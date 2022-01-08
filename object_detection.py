@@ -2,6 +2,7 @@ import cv2
 import numpy as np 
 import argparse
 import time
+import os
 
 weights_path = 'models/yolov3.weights'
 config_path = 'models/yolov3.cfg'
@@ -81,6 +82,27 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img):
 # 	# 		break
 # 	return labelled
 
+def append_box_to_file(path,frame_no, boxes):
+	# box_ax_csv = [box[0], box[1], box[2], box[3]]
+	str_to_append = ""
+	for ix, coords in enumerate(boxes):
+		str_to_append += str(ix)+' '+str(coords[0])+' '+str(coords[1])+' '+str(coords[2])+' '+str(coords[3])+'\n'
+
+	new_path = os.path.join(path, str(frame_no)+'.txt')
+
+	# create if not exists
+	if not os.path.exists(new_path):
+		# if subdirs do not exist, create aswell
+		if not os.path.exists(os.path.dirname(new_path)):
+			os.makedirs(os.path.dirname(new_path))
+
+		with open(new_path, 'w') as f:
+			f.write(str_to_append)
+	else:
+		with open(new_path, 'a') as f:
+			f.write(str_to_append)
+
+
 
 model, classes, colors, output_layers = load_yolo()
 def image_detect_again(img_path): 
@@ -91,10 +113,13 @@ def image_detect_again(img_path):
 	return labelled
 
 
-def image_detect_loaded(image):
+def image_detect_loaded(image, frame_no, path):
 	height, width, channels = image.shape
 	blob, outputs = detect_objects(image, model, output_layers)
 	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
+
+	append_box_to_file(path, frame_no, boxes)
+
 	labelled = draw_labels(boxes, confs, colors, class_ids, classes, image)
 	return labelled
 
