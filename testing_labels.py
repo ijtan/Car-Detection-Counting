@@ -9,12 +9,10 @@ from object_detection import *
 import os
 import glob
 
-vid_path = 'videos/'
 
-rain_1_path = vid_path + Rain_1 + '.mp4'
 
-def show_video_labels(vid_path, box_dirs):
-    box_files = glob.glob(vid_path + '*.txt')
+def show_video_labels(vid_path, box_dir):
+    box_files = glob.glob(box_dir + '*.txt')
     video = cv2.VideoCapture(vid_path)
     
     while True:
@@ -42,5 +40,9 @@ def show_video_labels(vid_path, box_dirs):
     video.release()
     cv2.destroyAllWindows()
         
-
-
+if __name__ == '__main__':
+    vid_path = 'videos/'
+    rain_1_path = vid_path + Rain_1 + '.mp4'
+    rain_1_boxes = 'rain_1_yolo/'
+    show_video_labels(rain_1_path, show_video_labels)
+ 
