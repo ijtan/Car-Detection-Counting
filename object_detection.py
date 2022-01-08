@@ -79,8 +79,9 @@ def draw_txt_labels(boxes, colors, img):
 			box = boxes[i]
 			size = img.shape
 
-			dw = 1./size[0]
-			dh = 1./size[1]
+			dw = size[0]
+			dh = size[1]
+
 			x = (box[0] + box[1])/2.0
 			y = (box[2] + box[3])/2.0
 			w = box[1] - box[0]
