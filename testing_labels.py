@@ -23,7 +23,7 @@ def show_video_labels(vid_path, box_dir):
         boxes = []
 
         # get box file by frame index
-        box_file = box_files[video.get(cv2.CAP_PROP_POS_FRAMES)]
+        box_file = box_files[int(video.get(cv2.CAP_PROP_POS_FRAMES))]
         with open(box_file, 'r') as f:
             for line in f:
                 coords = line.split(' ')
