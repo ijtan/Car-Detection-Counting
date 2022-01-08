@@ -52,8 +52,7 @@ def label_videos(videos, show_video=False, scale=1):
 
             print('Labelling frame: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
             
-
-            labelled_frames.append(image_detect_loaded(frame, video.get(cv2.CAP_PROP_POS_FRAMES), coord_path))
+            # labelled_frames.append(image_detect_loaded(frame, video.get(cv2.CAP_PROP_POS_FRAMES), coord_path))
 
             if show_video:
                 cv2.imshow('Video', labelled_frames[-1])
@@ -78,4 +77,4 @@ if __name__ == '__main__':
     # # example_path = videos[-7]
     # label_videos([example_path], True)
 
-    label_videos(videos, True)
+    label_videos(videos, False)
