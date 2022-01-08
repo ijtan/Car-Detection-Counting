@@ -70,9 +70,7 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img):
             color = colors[i]
             cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
             cv2.putText(img, label, (x, y - 5), font, 1, color, 1)
-
-        normalized_boxes.append(
-            [x/img.shape[1], y/img.shape[0], w/img.shape[1], h/img.shape[0]])
+            normalized_boxes.append([x/img.shape[1], y/img.shape[0], w/img.shape[1], h/img.shape[0]])
 
     # cv2.imshow("Image", img)
     return img, normalized_boxes
