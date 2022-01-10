@@ -93,7 +93,7 @@ def draw_txt_labels(boxes, colors, img):
             h = round(h*image_y_res)
 
             label = str('car')
-            print(label, x, y, w, h)
+            # print(label, x, y, w, h)
             color = colors[i]
             cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
             cv2.putText(img, label, (x, y - 5), font, 1, color, 1)
