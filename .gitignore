@@ -5,3 +5,4 @@ rain_1_yolo/*
 inputs/annotations/*
 inputs/*
 outputs/*
+custom_train/datasets/*
