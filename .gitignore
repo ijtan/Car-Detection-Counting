@@ -2,3 +2,6 @@ videos/*
 models/*
 __pycache__/*
 rain_1_yolo/*
+inputs/annotations/*
+inputs/*
+outputs/*

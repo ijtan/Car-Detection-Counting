@@ -4,9 +4,9 @@ import argparse
 import time
 import os
 
-weights_path = 'models/yolov3.weights'
-config_path = 'models/yolov3.cfg'
-names_path = 'models/coco.names'
+weights_path = 'inputs/weights/yolov3.weights'
+config_path = 'inputs/weights/yolov3.cfg'
+names_path = 'inputs/weights/coco.names'
 
 
 def load_yolo():

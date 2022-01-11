@@ -1,5 +1,5 @@
 import os
-import glob
+from pathlib import Path
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,21 +7,16 @@ import matplotlib.pyplot as plt
 from object_detection import *
 from tqdm import tqdm
 
-video_path='videos'
-output_txt_path = 'output_coords'
+video_path='inputs/media/Clips/'
+output_txt_path = 'outputs/yolo_coco_classification/'
 
 
 def get_video_paths():
     """
-    Returns a list of all the videos in the directory
+    Recursively Returns a list of all the videos in the directory
     """
-    # get nested videos in the directory mp4 or avi
-    videos = []
-    for dir in os.listdir(video_path):
-        if os.path.isdir(os.path.join(video_path, dir)):
-            for file in glob.glob(os.path.join(video_path, dir, '*.mp4')):
-                videos.append(file)
-    return videos
+    return list(Path.rglob(Path(video_path), '*.mp4'))
+    
 
 
 def label_videos(videos, show_video=False, scale=1):
@@ -70,11 +65,9 @@ def label_videos(videos, show_video=False, scale=1):
 
 if __name__ == '__main__':
     videos = get_video_paths()
+    print('Found {} total videos'.format(len(videos)))
 
-    
-    print('Found {} videos'.format(len(videos)))
+    test_videos = [str(v) for v in videos if 'test' in str(v).lower()]
+    print('Found {} test videos'.format(len(test_videos)))
 
-    # # example_path = videos[-7]
-    # label_videos([example_path], True)
-
-    label_videos(videos, False)
+    label_videos(test_videos, show_video=False, scale=1)
